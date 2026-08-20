@@ -1,0 +1,1 @@
+# CREATE-TABLE-customers-customer_id-INTEGER-PRIMARY-KEY-customer_name-TEXT-city-TEXT-state-TEXT-
