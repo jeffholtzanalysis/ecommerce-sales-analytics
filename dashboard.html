@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-Commerce Sales &amp; Customer Analytics — Dashboard</title>
+<script src="vendor/chart.umd.js"></script>
+<style>
+  :root{
+    --bg: #16181c;
+    --panel: #1e2126;
+    --panel-border: #2c3037;
+    --ink: #eae7e0;
+    --ink-dim: #9a9da3;
+    --ink-dim2: #8b8e94;
+    --blue: #3987e5;
+    --orange: #d95926;
+    --aqua: #199e70;
+    --yellow: #c98500;
+    --magenta: #d55181;
+    --violet: #9085e9;
+    --red: #e66767;
+    --grid: #2a2e34;
+    --mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+    --sans: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+  }
+  *{ box-sizing: border-box; }
+  html,body{
+    margin:0; padding:0; background: var(--bg); color: var(--ink);
+    font-family: var(--sans); -webkit-font-smoothing: antialiased;
+  }
+  body{ padding: 28px 32px 60px; }
+
+  .top-bar{
+    display:flex; justify-content: space-between; align-items: flex-end;
+    border-bottom: 1px solid var(--panel-border); padding-bottom: 18px; margin-bottom: 22px;
+    flex-wrap: wrap; gap: 14px;
+  }
+  .top-bar h1{ font-size: 20px; font-weight: 600; margin: 0 0 4px; letter-spacing: 0.2px; }
+  .top-bar .sub{ color: var(--ink-dim2); font-size: 13px; }
+  .badge-row{ display:flex; gap: 8px; flex-wrap: wrap; }
+  .badge{
+    font-family: var(--mono); font-size: 11px; color: var(--ink-dim2);
+    border: 1px solid var(--panel-border); padding: 4px 9px; border-radius: 3px;
+  }
+  .badge b{ color: var(--blue); font-weight: 600; }
+
+  .kpi-strip{
+    display:grid; grid-template-columns: repeat(5, 1fr); gap: 1px;
+    background: var(--panel-border); border: 1px solid var(--panel-border);
+    margin-bottom: 22px; border-radius: 4px; overflow: hidden;
+  }
+  .kpi{ background: var(--panel); padding: 16px 18px; }
+  .kpi .label{ font-size: 11px; color: var(--ink-dim2); margin-bottom: 8px; }
+  .kpi .value{ font-family: var(--mono); font-size: 22px; font-weight: 600; color: var(--ink); }
+  .kpi .value.blue{ color: var(--blue); }
+  .kpi .foot{ font-size: 11px; color: var(--ink-dim2); margin-top: 4px; }
+
+  .grid{ display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .grid.thirds{ grid-template-columns: 1fr 1fr 1fr; }
+  .panel{
+    background: var(--panel); border: 1px solid var(--panel-border); border-radius: 4px;
+    padding: 18px 20px;
+  }
+  .panel h2{ font-size: 13px; font-weight: 600; margin: 0 0 2px; color: var(--ink); }
+  .panel .desc{ font-size: 12px; color: var(--ink-dim2); margin-bottom: 14px; }
+  .chart-wrap{ position: relative; height: 260px; }
+  .chart-wrap.tall{ height: 320px; }
+
+  table{ width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  thead th{
+    text-align: left; font-weight: 500; color: var(--ink-dim2); font-size: 11px;
+    padding: 6px 8px; border-bottom: 1px solid var(--panel-border);
+  }
+  tbody td{ padding: 7px 8px; border-bottom: 1px solid #24272c; color: var(--ink); }
+  tbody tr:last-child td{ border-bottom: none; }
+  td.num, th.num{ font-family: var(--mono); text-align: right; }
+
+  .footer-note{
+    font-size: 11.5px; color: var(--ink-dim2); margin-top: 26px; line-height: 1.6;
+    border-top: 1px solid var(--panel-border); padding-top: 16px;
+  }
+  .footer-note b{ color: var(--ink); }
+
+  @media (max-width: 900px){
+    .grid, .grid.thirds{ grid-template-columns: 1fr; }
+    .kpi-strip{ grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div>
+    <h1>E-Commerce Sales &amp; Customer Analytics</h1>
+    <div class="sub">FY2025 · online retailer · electronics, office, furniture, home &amp; accessories</div>
+  </div>
+  <div class="badge-row">
+    <span class="badge">DATA: <b>SYNTHETIC</b></span>
+    <span class="badge">PERIOD: <b>Jan–Dec 2025</b></span>
+    <span class="badge">SOURCE: <b>SQLite + pandas</b></span>
+  </div>
+</div>
+
+<div class="kpi-strip" id="kpi-strip"></div>
+
+<div class="grid">
+  <div class="panel">
+    <h2>Monthly revenue</h2>
+    <div class="desc">Completed orders only — the holiday ramp in Nov/Dec is the single biggest driver of the year.</div>
+    <div class="chart-wrap tall"><canvas id="chart-monthly"></canvas></div>
+  </div>
+  <div class="panel">
+    <h2>Order outcomes</h2>
+    <div class="desc">Share of all orders placed, by final status.</div>
+    <div class="chart-wrap tall"><canvas id="chart-status"></canvas></div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="panel">
+    <h2>Revenue by category</h2>
+    <div class="desc">Furniture and Electronics dominate revenue; Accessories carries the best margin.</div>
+    <div class="chart-wrap"><canvas id="chart-category"></canvas></div>
+  </div>
+  <div class="panel">
+    <h2>Revenue by sales rep</h2>
+    <div class="desc">Completed-order revenue attributed to each rep.</div>
+    <div class="chart-wrap"><canvas id="chart-reps"></canvas></div>
+  </div>
+</div>
+
+<div class="grid thirds">
+  <div class="panel">
+    <h2>Top products</h2>
+    <div class="desc">By completed revenue.</div>
+    <table>
+      <thead><tr><th>Product</th><th class="num">Units</th><th class="num">Revenue</th></tr></thead>
+      <tbody id="table-products"></tbody>
+    </table>
+  </div>
+  <div class="panel">
+    <h2>Top customers</h2>
+    <div class="desc">By lifetime completed revenue.</div>
+    <table>
+      <thead><tr><th>Customer</th><th class="num">Orders</th><th class="num">Revenue</th></tr></thead>
+      <tbody id="table-customers"></tbody>
+    </table>
+  </div>
+  <div class="panel">
+    <h2>Customer concentration</h2>
+    <div class="desc">Share of total revenue by customer-revenue quartile.</div>
+    <div class="chart-wrap"><canvas id="chart-concentration"></canvas></div>
+  </div>
+</div>
+
+<div class="footer-note">
+  <b>Data note:</b> all data in this project is synthetically generated
+  (see <code>data/generate_data.py</code>) — it is not real sales data from
+  any company. It is built to be realistic (genuine seasonality, order
+  cancellations/returns, and rep-to-rep variation) so the analysis
+  techniques generalize to real e-commerce data. Full methodology and
+  code behind every number: <code>notebooks/analysis.ipynb</code> and
+  <code>sql/queries.sql</code>.
+</div>
+
+<script>
+const DATA = {"kpis": {"total_revenue": 757335.95, "total_profit": 337329.95, "gross_margin_pct": 44.5, "avg_order_value": 465.48, "total_orders": 1627, "total_customers": 200, "completed_pct": 90.4, "cancelled_pct": 5.8, "returned_pct": 3.8}, "status_counts": {"Completed": 1627, "Cancelled": 105, "Returned": 68}, "monthly": [{"month": "2025-01", "revenue": 48934.53, "orders": 98}, {"month": "2025-02", "revenue": 48893.82, "orders": 121}, {"month": "2025-03", "revenue": 53850.07, "orders": 108}, {"month": "2025-04", "revenue": 52095.07, "orders": 114}, {"month": "2025-05", "revenue": 60227.8, "orders": 120}, {"month": "2025-06", "revenue": 65611.1, "orders": 131}, {"month": "2025-07", "revenue": 51915.78, "orders": 118}, {"month": "2025-08", "revenue": 61875.28, "orders": 133}, {"month": "2025-09", "revenue": 62514.76, "orders": 147}, {"month": "2025-10", "revenue": 72546.54000000001, "orders": 147}, {"month": "2025-11", "revenue": 68954.92, "orders": 169}, {"month": "2025-12", "revenue": 109916.28, "orders": 221}], "categories": [{"category": "Furniture", "revenue": 355345.3, "profit": 149769.30000000002, "units": 1470, "margin_pct": 42.1}, {"category": "Electronics", "revenue": 268614.06, "profit": 116727.06, "units": 2594, "margin_pct": 43.5}, {"category": "Home & Kitchen", "revenue": 48584.15, "profit": 24836.149999999998, "units": 1085, "margin_pct": 51.1}, {"category": "Accessories", "revenue": 44312.93, "profit": 25331.929999999997, "units": 1007, "margin_pct": 57.2}, {"category": "Office Supplies", "revenue": 40479.51, "profit": 20665.510000000002, "units": 1049, "margin_pct": 51.1}], "top_products": [{"product_name": "Standing Desk", "category": "Furniture", "revenue": 139196.52, "profit": 57416.520000000004, "units": 348, "margin_pct": 41.2}, {"product_name": "27-inch Monitor", "category": "Electronics", "revenue": 82106.43000000001, "profit": 30341.430000000004, "units": 357, "margin_pct": 37.0}, {"product_name": "Ergonomic Office Chair", "category": "Furniture", "revenue": 77996.88, "profit": 32756.880000000005, "units": 312, "margin_pct": 42.0}, {"product_name": "Filing Cabinet", "category": "Furniture", "revenue": 77035.72, "profit": 32095.720000000005, "units": 428, "margin_pct": 41.7}, {"product_name": "Bookshelf", "category": "Furniture", "revenue": 61116.18, "profit": 27500.180000000004, "units": 382, "margin_pct": 45.0}, {"product_name": "Portable SSD", "category": "Electronics", "revenue": 53295.9, "profit": 21315.900000000005, "units": 410, "margin_pct": 40.0}, {"product_name": "Noise-Canceling Headset", "category": "Electronics", "revenue": 45716.189999999995, "profit": 22094.19, "units": 381, "margin_pct": 48.3}, {"product_name": "Mechanical Keyboard", "category": "Electronics", "revenue": 33296.299999999996, "profit": 15536.299999999997, "units": 370, "margin_pct": 46.7}, {"product_name": "Coffee Maker", "category": "Home & Kitchen", "revenue": 28956.379999999997, "profit": 13752.379999999997, "units": 362, "margin_pct": 47.5}, {"product_name": "Webcam", "category": "Electronics", "revenue": 26771.429999999997, "profit": 13205.429999999998, "units": 357, "margin_pct": 49.3}], "top_customers": [{"customer_name": "Samantha Allen", "state": "IL", "orders": 18, "revenue": 8868.31}, {"customer_name": "Christopher Wilson", "state": "WI", "orders": 13, "revenue": 8609.45}, {"customer_name": "Joshua Johnson", "state": "IL", "orders": 15, "revenue": 8569.09}, {"customer_name": "Michael King", "state": "WI", "orders": 13, "revenue": 8229.380000000001}, {"customer_name": "Amanda Jackson", "state": "IL", "orders": 12, "revenue": 8042.389999999999}, {"customer_name": "Daniel Hall", "state": "WI", "orders": 11, "revenue": 7902.42}, {"customer_name": "Sarah Lee", "state": "IL", "orders": 14, "revenue": 7899.43}, {"customer_name": "Matthew Young", "state": "WI", "orders": 15, "revenue": 7722.34}, {"customer_name": "Daniel Walker", "state": "IL", "orders": 10, "revenue": 7660.45}, {"customer_name": "Emily Jackson", "state": "WI", "orders": 13, "revenue": 7465.35}], "reps": [{"employee_name": "Alex Carter", "revenue": 179014.12, "orders": 366, "avg_order_value": 489.11}, {"employee_name": "Morgan Reed", "revenue": 149067.87, "orders": 328, "avg_order_value": 454.48}, {"employee_name": "Jordan Hayes", "revenue": 120130.48, "orders": 256, "avg_order_value": 469.26}, {"employee_name": "Taylor Brooks", "revenue": 93393.04000000001, "orders": 213, "avg_order_value": 438.46}, {"employee_name": "Riley Cooper", "revenue": 57957.43, "orders": 125, "avg_order_value": 463.66}, {"employee_name": "Drew Bennett", "revenue": 56243.020000000004, "orders": 118, "avg_order_value": 476.64}, {"employee_name": "Casey Morgan", "revenue": 55450.99, "orders": 106, "avg_order_value": 523.12}, {"employee_name": "Jamie Parker", "revenue": 46079.0, "orders": 115, "avg_order_value": 400.69}], "customer_concentration": {"top_quartile_share_pct": 41.2, "top_10pct_share_pct": 19.7, "quartile_revenue_pct": [41.2, 28.3, 19.6, 10.9]}};
+
+const fmtMoney = (n) => "$" + Math.round(n).toLocaleString();
+const fmtMoneyK = (n) => "$" + (n / 1000).toFixed(0) + "K";
+
+Chart.defaults.color = "#9a9da3";
+Chart.defaults.font.family = "'Inter', -apple-system, 'Segoe UI', sans-serif";
+Chart.defaults.font.size = 11.5;
+Chart.defaults.plugins.legend.labels.boxWidth = 10;
+Chart.defaults.plugins.legend.labels.boxHeight = 10;
+
+const CAT_COLORS = ["#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#9085e9", "#e66767"];
+
+function kpiStrip() {
+  const k = DATA.kpis;
+  const cards = [
+    { label: "Total revenue", value: fmtMoney(k.total_revenue), cls: "blue" },
+    { label: "Gross margin", value: k.gross_margin_pct + "%" },
+    { label: "Avg order value", value: fmtMoney(k.avg_order_value) },
+    { label: "Completed orders", value: k.total_orders.toLocaleString(), foot: k.completed_pct + "% of all orders" },
+    { label: "Cancelled + returned", value: (k.cancelled_pct + k.returned_pct).toFixed(1) + "%", foot: k.cancelled_pct + "% cancelled, " + k.returned_pct + "% returned" },
+  ];
+  document.getElementById("kpi-strip").innerHTML = cards.map(c => `
+    <div class="kpi">
+      <div class="label">${c.label}</div>
+      <div class="value ${c.cls || ""}">${c.value}</div>
+      ${c.foot ? `<div class="foot">${c.foot}</div>` : ""}
+    </div>`).join("");
+}
+
+function gridOpts(extra) {
+  return Object.assign({
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: "#2a2e34" }, ticks: { color: "#8b8e94" } },
+      y: { grid: { color: "#2a2e34" }, ticks: { color: "#8b8e94" }, beginAtZero: true },
+    },
+  }, extra || {});
+}
+
+function chartMonthly() {
+  new Chart(document.getElementById("chart-monthly"), {
+    type: "line",
+    data: {
+      labels: DATA.monthly.map(m => m.month),
+      datasets: [{
+        data: DATA.monthly.map(m => m.revenue),
+        borderColor: "#3987e5", backgroundColor: "rgba(57,135,229,0.12)",
+        fill: true, tension: 0.3, pointRadius: 3,
+      }],
+    },
+    options: gridOpts({
+      scales: {
+        x: { grid: { display: false }, ticks: { color: "#8b8e94" } },
+        y: { grid: { color: "#2a2e34" }, ticks: { color: "#8b8e94", callback: fmtMoneyK }, beginAtZero: true },
+      },
+    }),
+  });
+}
+
+function chartStatus() {
+  const order = ["Completed", "Cancelled", "Returned"];
+  const counts = order.map(s => DATA.status_counts[s] || 0);
+  new Chart(document.getElementById("chart-status"), {
+    type: "doughnut",
+    data: {
+      labels: order,
+      datasets: [{ data: counts, backgroundColor: ["#199e70", "#c98500", "#e66767"], borderColor: "#1e2126", borderWidth: 2 }],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: "bottom", labels: { color: "#9a9da3" } } },
+    },
+  });
+}
+
+function chartCategory() {
+  const cats = DATA.categories;
+  new Chart(document.getElementById("chart-category"), {
+    type: "bar",
+    data: {
+      labels: cats.map(c => c.category),
+      datasets: [{ data: cats.map(c => c.revenue), backgroundColor: CAT_COLORS, borderRadius: 4 }],
+    },
+    options: gridOpts({
+      indexAxis: "y",
+      scales: {
+        x: { grid: { color: "#2a2e34" }, ticks: { color: "#8b8e94", callback: fmtMoneyK }, beginAtZero: true },
+        y: { grid: { display: false }, ticks: { color: "#8b8e94" } },
+      },
+    }),
+  });
+}
+
+function chartReps() {
+  const reps = DATA.reps;
+  new Chart(document.getElementById("chart-reps"), {
+    type: "bar",
+    data: {
+      labels: reps.map(r => r.employee_name),
+      datasets: [{ data: reps.map(r => r.revenue), backgroundColor: "#3987e5", borderRadius: 4 }],
+    },
+    options: gridOpts({
+      indexAxis: "y",
+      scales: {
+        x: { grid: { color: "#2a2e34" }, ticks: { color: "#8b8e94", callback: fmtMoneyK }, beginAtZero: true },
+        y: { grid: { display: false }, ticks: { color: "#8b8e94" } },
+      },
+    }),
+  });
+}
+
+function chartConcentration() {
+  const c = DATA.customer_concentration;
+  new Chart(document.getElementById("chart-concentration"), {
+    type: "bar",
+    data: {
+      labels: ["Top 25%", "2nd quartile", "3rd quartile", "Bottom 25%"],
+      datasets: [{ data: c.quartile_revenue_pct, backgroundColor: CAT_COLORS, borderRadius: 4 }],
+    },
+    options: gridOpts({
+      scales: {
+        y: { grid: { color: "#2a2e34" }, ticks: { color: "#8b8e94", callback: (v) => v + "%" }, beginAtZero: true, max: 50 },
+        x: { grid: { display: false }, ticks: { color: "#8b8e94" } },
+      },
+    }),
+  });
+}
+
+function tableProducts() {
+  document.getElementById("table-products").innerHTML = DATA.top_products.slice(0, 8).map(p => `
+    <tr><td>${p.product_name}</td><td class="num">${p.units}</td><td class="num">${fmtMoney(p.revenue)}</td></tr>
+  `).join("");
+}
+
+function tableCustomers() {
+  document.getElementById("table-customers").innerHTML = DATA.top_customers.slice(0, 8).map(c => `
+    <tr><td>${c.customer_name}</td><td class="num">${c.orders}</td><td class="num">${fmtMoney(c.revenue)}</td></tr>
+  `).join("");
+}
+
+kpiStrip();
+chartMonthly();
+chartStatus();
+chartCategory();
+chartReps();
+chartConcentration();
+tableProducts();
+tableCustomers();
+</script>
+
+</body>
+</html>

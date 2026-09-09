@@ -1,0 +1,90 @@
+
+=== 1. Data quality: row counts ===
+ table_name  row_count
+  customers        200
+  employees          8
+   products         20
+     orders       1800
+order_items       4567
+
+=== 2. Order status breakdown (cancellation / return rate) ===
+   status  orders  pct_of_orders
+Completed    1627           90.4
+Cancelled     105            5.8
+ Returned      68            3.8
+
+=== 3. Overall sales KPIs (completed orders only) ===
+ total_orders  total_customers  total_revenue  total_profit  gross_margin_pct  avg_order_value
+         1627              200      757335.95     337329.95              44.5           465.48
+
+=== 4. Monthly revenue trend ===
+  month  orders   revenue
+2025-01      98  48934.53
+2025-02     121  48893.82
+2025-03     108  53850.07
+2025-04     114  52095.07
+2025-05     120  60227.80
+2025-06     131  65611.10
+2025-07     118  51915.78
+2025-08     133  61875.28
+2025-09     147  62514.76
+2025-10     147  72546.54
+2025-11     169  68954.92
+2025-12     221 109916.28
+
+=== 5. Top products by revenue and profit ===
+           product_name       category  units_sold   revenue   profit  margin_pct
+          Standing Desk      Furniture         348 139196.52 57416.52        41.2
+        27-inch Monitor    Electronics         357  82106.43 30341.43        37.0
+ Ergonomic Office Chair      Furniture         312  77996.88 32756.88        42.0
+         Filing Cabinet      Furniture         428  77035.72 32095.72        41.7
+              Bookshelf      Furniture         382  61116.18 27500.18        45.0
+           Portable SSD    Electronics         410  53295.90 21315.90        40.0
+Noise-Canceling Headset    Electronics         381  45716.19 22094.19        48.3
+    Mechanical Keyboard    Electronics         370  33296.30 15536.30        46.7
+           Coffee Maker Home & Kitchen         362  28956.38 13752.38        47.5
+                 Webcam    Electronics         357  26771.43 13205.43        49.3
+
+=== 6. Category performance (revenue, profit, margin) ===
+       category  units_sold   revenue    profit  margin_pct
+      Furniture        1470 355345.30 149769.30        42.1
+    Electronics        2594 268614.06 116727.06        43.5
+ Home & Kitchen        1085  48584.15  24836.15        51.1
+    Accessories        1007  44312.93  25331.93        57.2
+Office Supplies        1049  40479.51  20665.51        51.1
+
+=== 7. Top 10 customers by lifetime revenue ===
+ customer_id      customer_name       location  orders  revenue
+        1170     Samantha Allen    Chicago, IL      18  8868.31
+        1102 Christopher Wilson  Green Bay, WI      13  8609.45
+        1148     Joshua Johnson Naperville, IL      15  8569.09
+        1081       Michael King  Milwaukee, WI      13  8229.38
+        1116     Amanda Jackson   Evanston, IL      12  8042.39
+        1154        Daniel Hall     Racine, WI      11  7902.42
+        1108          Sarah Lee   Rockford, IL      14  7899.43
+        1162      Matthew Young   Appleton, WI      15  7722.34
+        1059      Daniel Walker   Rockford, IL      10  7660.45
+        1038      Emily Jackson     Beloit, WI      13  7465.35
+
+=== 8. Customer value concentration (Pareto / 80-20 check) ===
+                segment  customers   revenue  pct_of_revenue
+   Top 25% of customers         50 311745.49            41.2
+           2nd quartile         50 214370.89            28.3
+           3rd quartile         50 148692.52            19.6
+Bottom 25% of customers         50  82527.05            10.9
+
+=== 9. Sales rep (employee) performance ===
+employee_name  completed_orders   revenue  avg_order_value
+  Alex Carter               366 179014.12           489.11
+  Morgan Reed               328 149067.87           454.48
+ Jordan Hayes               256 120130.48           469.26
+Taylor Brooks               213  93393.04           438.46
+ Riley Cooper               125  57957.43           463.66
+ Drew Bennett               118  56243.02           476.64
+ Casey Morgan               106  55450.99           523.12
+ Jamie Parker               115  46079.00           400.69
+
+=== 10. Revenue by state (geographic concentration) ===
+state  customers   revenue
+   WI        103 380773.58
+   IL         97 376562.37
