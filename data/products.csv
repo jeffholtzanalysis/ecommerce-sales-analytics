@@ -1,0 +1,21 @@
+product_id,product_name,category,price,cost
+101,Wireless Mouse,Electronics,29.99,14.0
+102,Mechanical Keyboard,Electronics,89.99,48.0
+103,USB-C Hub,Electronics,44.99,22.0
+104,27-inch Monitor,Electronics,229.99,145.0
+105,Noise-Canceling Headset,Electronics,119.99,62.0
+106,Laptop Stand,Office Supplies,49.99,24.0
+107,Desk Organizer,Office Supplies,24.99,10.0
+108,Printer Paper Case,Office Supplies,39.99,22.0
+109,Ergonomic Office Chair,Furniture,249.99,145.0
+110,Standing Desk,Furniture,399.99,235.0
+111,Filing Cabinet,Furniture,179.99,105.0
+112,Bookshelf,Furniture,159.99,88.0
+113,Coffee Maker,Home & Kitchen,79.99,42.0
+114,Water Bottle,Home & Kitchen,19.99,8.0
+115,Desk Lamp,Home & Kitchen,34.99,16.0
+116,Backpack,Accessories,69.99,31.0
+117,Laptop Sleeve,Accessories,39.99,17.0
+118,Cable Management Kit,Accessories,22.99,9.0
+119,Webcam,Electronics,74.99,38.0
+120,Portable SSD,Electronics,129.99,78.0

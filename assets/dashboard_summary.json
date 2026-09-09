@@ -1,0 +1,321 @@
+{
+  "kpis": {
+    "total_revenue": 757335.95,
+    "total_profit": 337329.95,
+    "gross_margin_pct": 44.5,
+    "avg_order_value": 465.48,
+    "total_orders": 1627,
+    "total_customers": 200,
+    "completed_pct": 90.4,
+    "cancelled_pct": 5.8,
+    "returned_pct": 3.8
+  },
+  "status_counts": {
+    "Completed": 1627,
+    "Cancelled": 105,
+    "Returned": 68
+  },
+  "monthly": [
+    {
+      "month": "2025-01",
+      "revenue": 48934.53,
+      "orders": 98
+    },
+    {
+      "month": "2025-02",
+      "revenue": 48893.82,
+      "orders": 121
+    },
+    {
+      "month": "2025-03",
+      "revenue": 53850.07,
+      "orders": 108
+    },
+    {
+      "month": "2025-04",
+      "revenue": 52095.07,
+      "orders": 114
+    },
+    {
+      "month": "2025-05",
+      "revenue": 60227.8,
+      "orders": 120
+    },
+    {
+      "month": "2025-06",
+      "revenue": 65611.1,
+      "orders": 131
+    },
+    {
+      "month": "2025-07",
+      "revenue": 51915.78,
+      "orders": 118
+    },
+    {
+      "month": "2025-08",
+      "revenue": 61875.28,
+      "orders": 133
+    },
+    {
+      "month": "2025-09",
+      "revenue": 62514.76,
+      "orders": 147
+    },
+    {
+      "month": "2025-10",
+      "revenue": 72546.54000000001,
+      "orders": 147
+    },
+    {
+      "month": "2025-11",
+      "revenue": 68954.92,
+      "orders": 169
+    },
+    {
+      "month": "2025-12",
+      "revenue": 109916.28,
+      "orders": 221
+    }
+  ],
+  "categories": [
+    {
+      "category": "Furniture",
+      "revenue": 355345.3,
+      "profit": 149769.30000000002,
+      "units": 1470,
+      "margin_pct": 42.1
+    },
+    {
+      "category": "Electronics",
+      "revenue": 268614.06,
+      "profit": 116727.06,
+      "units": 2594,
+      "margin_pct": 43.5
+    },
+    {
+      "category": "Home & Kitchen",
+      "revenue": 48584.15,
+      "profit": 24836.149999999998,
+      "units": 1085,
+      "margin_pct": 51.1
+    },
+    {
+      "category": "Accessories",
+      "revenue": 44312.93,
+      "profit": 25331.929999999997,
+      "units": 1007,
+      "margin_pct": 57.2
+    },
+    {
+      "category": "Office Supplies",
+      "revenue": 40479.51,
+      "profit": 20665.510000000002,
+      "units": 1049,
+      "margin_pct": 51.1
+    }
+  ],
+  "top_products": [
+    {
+      "product_name": "Standing Desk",
+      "category": "Furniture",
+      "revenue": 139196.52,
+      "profit": 57416.520000000004,
+      "units": 348,
+      "margin_pct": 41.2
+    },
+    {
+      "product_name": "27-inch Monitor",
+      "category": "Electronics",
+      "revenue": 82106.43000000001,
+      "profit": 30341.430000000004,
+      "units": 357,
+      "margin_pct": 37.0
+    },
+    {
+      "product_name": "Ergonomic Office Chair",
+      "category": "Furniture",
+      "revenue": 77996.88,
+      "profit": 32756.880000000005,
+      "units": 312,
+      "margin_pct": 42.0
+    },
+    {
+      "product_name": "Filing Cabinet",
+      "category": "Furniture",
+      "revenue": 77035.72,
+      "profit": 32095.720000000005,
+      "units": 428,
+      "margin_pct": 41.7
+    },
+    {
+      "product_name": "Bookshelf",
+      "category": "Furniture",
+      "revenue": 61116.18,
+      "profit": 27500.180000000004,
+      "units": 382,
+      "margin_pct": 45.0
+    },
+    {
+      "product_name": "Portable SSD",
+      "category": "Electronics",
+      "revenue": 53295.9,
+      "profit": 21315.900000000005,
+      "units": 410,
+      "margin_pct": 40.0
+    },
+    {
+      "product_name": "Noise-Canceling Headset",
+      "category": "Electronics",
+      "revenue": 45716.189999999995,
+      "profit": 22094.19,
+      "units": 381,
+      "margin_pct": 48.3
+    },
+    {
+      "product_name": "Mechanical Keyboard",
+      "category": "Electronics",
+      "revenue": 33296.299999999996,
+      "profit": 15536.299999999997,
+      "units": 370,
+      "margin_pct": 46.7
+    },
+    {
+      "product_name": "Coffee Maker",
+      "category": "Home & Kitchen",
+      "revenue": 28956.379999999997,
+      "profit": 13752.379999999997,
+      "units": 362,
+      "margin_pct": 47.5
+    },
+    {
+      "product_name": "Webcam",
+      "category": "Electronics",
+      "revenue": 26771.429999999997,
+      "profit": 13205.429999999998,
+      "units": 357,
+      "margin_pct": 49.3
+    }
+  ],
+  "top_customers": [
+    {
+      "customer_name": "Samantha Allen",
+      "state": "IL",
+      "orders": 18,
+      "revenue": 8868.31
+    },
+    {
+      "customer_name": "Christopher Wilson",
+      "state": "WI",
+      "orders": 13,
+      "revenue": 8609.45
+    },
+    {
+      "customer_name": "Joshua Johnson",
+      "state": "IL",
+      "orders": 15,
+      "revenue": 8569.09
+    },
+    {
+      "customer_name": "Michael King",
+      "state": "WI",
+      "orders": 13,
+      "revenue": 8229.380000000001
+    },
+    {
+      "customer_name": "Amanda Jackson",
+      "state": "IL",
+      "orders": 12,
+      "revenue": 8042.389999999999
+    },
+    {
+      "customer_name": "Daniel Hall",
+      "state": "WI",
+      "orders": 11,
+      "revenue": 7902.42
+    },
+    {
+      "customer_name": "Sarah Lee",
+      "state": "IL",
+      "orders": 14,
+      "revenue": 7899.43
+    },
+    {
+      "customer_name": "Matthew Young",
+      "state": "WI",
+      "orders": 15,
+      "revenue": 7722.34
+    },
+    {
+      "customer_name": "Daniel Walker",
+      "state": "IL",
+      "orders": 10,
+      "revenue": 7660.45
+    },
+    {
+      "customer_name": "Emily Jackson",
+      "state": "WI",
+      "orders": 13,
+      "revenue": 7465.35
+    }
+  ],
+  "reps": [
+    {
+      "employee_name": "Alex Carter",
+      "revenue": 179014.12,
+      "orders": 366,
+      "avg_order_value": 489.11
+    },
+    {
+      "employee_name": "Morgan Reed",
+      "revenue": 149067.87,
+      "orders": 328,
+      "avg_order_value": 454.48
+    },
+    {
+      "employee_name": "Jordan Hayes",
+      "revenue": 120130.48,
+      "orders": 256,
+      "avg_order_value": 469.26
+    },
+    {
+      "employee_name": "Taylor Brooks",
+      "revenue": 93393.04000000001,
+      "orders": 213,
+      "avg_order_value": 438.46
+    },
+    {
+      "employee_name": "Riley Cooper",
+      "revenue": 57957.43,
+      "orders": 125,
+      "avg_order_value": 463.66
+    },
+    {
+      "employee_name": "Drew Bennett",
+      "revenue": 56243.020000000004,
+      "orders": 118,
+      "avg_order_value": 476.64
+    },
+    {
+      "employee_name": "Casey Morgan",
+      "revenue": 55450.99,
+      "orders": 106,
+      "avg_order_value": 523.12
+    },
+    {
+      "employee_name": "Jamie Parker",
+      "revenue": 46079.0,
+      "orders": 115,
+      "avg_order_value": 400.69
+    }
+  ],
+  "customer_concentration": {
+    "top_quartile_share_pct": 41.2,
+    "top_10pct_share_pct": 19.7,
+    "quartile_revenue_pct": [
+      41.2,
+      28.3,
+      19.6,
+      10.9
+    ]
+  }
+}
