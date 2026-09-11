@@ -1,7 +1,7 @@
 # E-Commerce Sales & Customer Analytics
 
-**Live dashboard:** https://jeffholtzanalysis.github.io/CREATE-TABLE-customers-customer_id-INTEGER-PRIMARY-KEY-customer_name-TEXT-city-TEXT-state-TEXT-/dashboard.html
-*(link goes live once GitHub Pages is enabled for this repo — see [Deploying your own copy](#deploying-your-own-copy) below)*
+**Live dashboard:** 
+*(link goes live once **Live dashboard:** <https://jeffholtzanalysis.github.io/ecommerce-sales-analytics/dashboard.html> *(link goes live once GitHub Pages is enabled for this repo — see [Deploying your own copy](#deploying-your-own-copy) below)* Pages is enabled for this repo — see [Deploying your own copy](#deploying-your-own-copy) below)*
 
 An end-to-end data analysis project simulating one fiscal year of orders for
 a mid-size online retailer: a reproducible synthetic dataset, a Python/pandas
